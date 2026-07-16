@@ -50,18 +50,18 @@ If the bare bucket ARN is omitted, uploads succeed but aws s3 ls fails with Acce
 ## Screenshot 1 – Role Creation
 
 ```
-screenshots/01-role-creation.png
+Screenshots/01-role-creation.png
 ```
 
-![Role Creation](screenshots/01-role-creation.png)
+![Role Creation](Screenshots/01-role-creation.png)
 
 ## Screenshot 2 – Policy Attachment
 
 ```
-screenshots/02-policy-attachment.png
+Screenshots/02-policy-attachment.png
 ```
 
-![Policy Attachment](screenshots/02-policy-attachment.png)
+![Policy Attachment](Screenshots/02-policy-attachment.png)
 
 ---
 
@@ -76,10 +76,10 @@ screenshots/02-policy-attachment.png
 ## Screenshot 3 – EC2 with Role
 
 ```
-screenshots/03-ec2-with-role.png
+Screenshots/03-ec2-with-role.png
 ```
 
-![EC2 with Role](screenshots/03-ec2-with-role.png)
+![EC2 with Role](Screenshots/03-ec2-with-role.png)
 
 ---
 
@@ -100,18 +100,18 @@ screenshots/03-ec2-with-role.png
 ## Screenshot 4 – Assumed-Role Identity
 
 ```
-screenshots/04-assumed-role-identity.png
+Screenshots/04-assumed-role-identity.png
 ```
 
-![Assumed Role Identity](screenshots/04-assumed-role-identity.png)
+![Assumed Role Identity](Screenshots/04-assumed-role-identity.png)
 
 ## Screenshot 5 – S3 Upload Success
 
 ```
-screenshots/05-s3-upload-success.png
+Screenshots/05-s3-upload-success.png
 ```
 
-![S3 Upload Success](screenshots/05-s3-upload-success.png)
+![S3 Upload Success](Screenshots/05-s3-upload-success.png)
 
 ---
 
@@ -134,10 +134,10 @@ arn:aws:sts::128529977749:assumed-role/ec2-s3-cloudwatch-role/i-098f9b3723aa4115
 ## Screenshot 6 – Access Denied Proof
 
 ```
-screenshots/06-access-denied-proof.png
+Screenshots/06-access-denied-proof.png
 ```
 
-![Access Denied Proof](screenshots/06-access-denied-proof.png)
+![Access Denied Proof](Screenshots/06-access-denied-proof.png)
 
 ---
 
@@ -179,7 +179,7 @@ Repository name: `ce-lab-iam-roles-ec2` (**public**)
 
 - [x] `policies/s3-cloudwatch-policy.json` and `policies/trust-policy.json` committed
 - [ ] `test-output/` files committed (commands, S3 test, access-denied test)
-- [x] All 6 screenshots present
+- [x] All 6 Screenshots present
 - [x] `README.md` complete with reflections
 - [x] Policy uses **both** ARN forms
 - [x] `get-caller-identity` shows `assumed-role/`
