@@ -502,9 +502,32 @@ aws sts get-caller-identity     # should now show assumed-role/...
 Answer these in your README:
 
 1. What on the instance enables the AWS CLI to authenticate? Trace the path from `aws s3 ls` to the credential.
+The EC2 instance has an IAM role attached. When the AWS CLI runs `aws s3 ls`,
+it automatically requests temporary security credentials from the EC2 Instance
+Metadata Service (IMDS). AWS verifies these temporary credentials and authorizes
+the request based on the IAM role's permissions. No access keys are stored on
+the instance.
+
 2. If an attacker obtains a shell on the instance, what credentials can they access, and how does this differ from a stolen access key on a laptop?
+An attacker could access the temporary credentials provided by the IAM role
+through the Instance Metadata Service. These credentials expire automatically
+and are limited to the permissions granted by the IAM role. In contrast, a
+stolen access key on a laptop is usually long-lived and remains valid until it
+is manually revoked or rotated, making it a greater security risk.
+
 3. Why does the trust policy matter? What would occur if it specified `"Service": "lambda.amazonaws.com"` instead?
+The trust policy defines which AWS service is allowed to assume the IAM role.
+For an EC2 role, the trusted service must be `ec2.amazonaws.com`. If the trust
+policy instead specified `lambda.amazonaws.com`, EC2 instances would not be able
+to assume the role or receive temporary credentials, causing AWS CLI commands
+such as `aws s3 ls` to fail with credential errors.
+
 4. The policy allows `s3:PutObject` but not `s3:DeleteObject`. Why might this distinction be significant in production?
+Granting `s3:PutObject` allows an application to upload new files, while denying
+`s3:DeleteObject` prevents accidental or malicious deletion of data. This
+follows the principle of least privilege by giving the application only the
+permissions it needs, helping protect important data from being lost or
+tampered with.
 
 ---
 

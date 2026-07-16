@@ -1,0 +1,1 @@
+aws iam get-role --role-name ec2-s3-cloudwatch-role --query Role.AssumeRolePolicyDocument

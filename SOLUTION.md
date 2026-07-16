@@ -1,7 +1,7 @@
 # IAM Roles for EC2 Lab - Solution
 
-**Student Name:** [Your Name]  
-**Date Completed:** [Date]
+**Student Name:** Adnan Nooruddin  
+**Date Completed:** 16.07.2026
 
 ---
 
@@ -9,9 +9,9 @@
 
 | Item | Value |
 |------|-------|
-| Instance ID | [i-xxxxxxxxxxxxx] |
+| Instance ID | [i-098f9b3723aa41153] |
 | Region | [eu-west-1] |
-| S3 Bucket Name | [ce-bootcamp-m2-05-yourname] |
+| S3 Bucket Name | [ce-bootcamp-m2-05-adnan] |
 | Policy Name | [ec2-s3-access-policy] |
 | Role Name | [ec2-s3-cloudwatch-role] |
 
@@ -19,25 +19,28 @@
 
 # Step 1: Create an S3 Bucket
 
-- [ ] Bucket created with `aws s3 mb`
-- [ ] Bucket appears in `aws s3 ls`
+- [x] Bucket created with `aws s3 mb`
+- [x] Bucket appears in `aws s3 ls`
 
-**My bucket name:** `_______________________`
+**My bucket name:** `ce-bootcamp-m2-05-adnan`
 
 ---
 
 # Step 2 & 3: Create the Custom Policy
 
-- [ ] Policy `ec2-s3-access-policy` created from the JSON
-- [ ] Both `YOUR-BUCKET-NAME` placeholders replaced with my real bucket
-- [ ] `Resource` has **both** ARNs (bucket and objects)
+- [x] Policy `ec2-s3-access-policy` created from the JSON
+- [x] Both `YOUR-BUCKET-NAME` placeholders replaced with my real bucket
+- [x] `Resource` has **both** ARNs (bucket and objects)
 
 ### Why does the policy need two ARNs (one with `/*`, one without)?
 
 ```
-_______________________________________________________________
+arn:aws:s3:::YOUR-BUCKET-NAME       <- the bucket   -> s3:ListBucket
+arn:aws:s3:::YOUR-BUCKET-NAME/*     <- the objects  -> s3:GetObject, s3:PutObject
 
-_______________________________________________________________
+ListBucket is an operation performed on the bucket. GetObject and PutObject are performed on objects. These are different resource types and require different ARNs.
+
+If the bare bucket ARN is omitted, uploads succeed but aws s3 ls fails with AccessDenied
 ```
 
 ---
@@ -62,9 +65,9 @@ screenshots/02-policy-attachment.png
 
 ---
 
-- [ ] Role `ec2-s3-cloudwatch-role` created with **EC2** trusted entity
-- [ ] `CloudWatchAgentServerPolicy` attached
-- [ ] `ec2-s3-access-policy` attached
+- [x] Role `ec2-s3-cloudwatch-role` created with **EC2** trusted entity
+- [x] `CloudWatchAgentServerPolicy` attached
+- [x] `ec2-s3-access-policy` attached
 
 ---
 
@@ -80,15 +83,15 @@ screenshots/03-ec2-with-role.png
 
 ---
 
-- [ ] Role attached via **Actions → Security → Modify IAM role**
-- [ ] Instance **Details** tab shows the IAM role
+- [x] Role attached via **Actions → Security → Modify IAM role**
+- [x] Instance **Details** tab shows the IAM role
 
 ---
 
 # Step 6: Confirm No Credentials Exist on the Instance
 
-- [ ] Ran `ls -la ~/.aws/` on the instance
-- [ ] No `~/.aws/credentials` file present (deleted it if it existed)
+- [x] Ran `ls -la ~/.aws/` on the instance
+- [x] No `~/.aws/credentials` file present (deleted it if it existed)
 
 ---
 
@@ -112,16 +115,16 @@ screenshots/05-s3-upload-success.png
 
 ---
 
-- [ ] `aws sts get-caller-identity` shows `assumed-role/`, not `user`
-- [ ] `aws s3 ls s3://YOUR-BUCKET-NAME/` works
-- [ ] Upload (`aws s3 cp test.txt ...`) works
-- [ ] Read-back works
-- [ ] I never typed a credential
+- [x] `aws sts get-caller-identity` shows `assumed-role/`, not `user`
+- [x] `aws s3 ls s3://YOUR-BUCKET-NAME/` works
+- [x] Upload (`aws s3 cp test.txt ...`) works
+- [x] Read-back works
+- [x] I never typed a credential
 
 ### The `Arn` from `get-caller-identity`
 
 ```text
-[Paste the assumed-role ARN here]
+arn:aws:sts::128529977749:assumed-role/ec2-s3-cloudwatch-role/i-098f9b3723aa41153
 ```
 
 ---
@@ -138,23 +141,23 @@ screenshots/06-access-denied-proof.png
 
 ---
 
-- [ ] Listing a bucket I was not granted → `AccessDenied`
-- [ ] `aws s3 rb` (delete, not granted) → `AccessDenied`
+- [x] Listing a bucket I was not granted → `AccessDenied`
+- [x] `aws s3 rb` (delete, not granted) → `AccessDenied`
 
 ---
 
 # Step 9: Capture the Trust Policy
 
-- [ ] Ran `aws iam get-role ...` **from my laptop** (not the instance)
-- [ ] Saved output as `trust-policy.json`
-- [ ] Trust policy `Principal` is `ec2.amazonaws.com`
+- [x] Ran `aws iam get-role ...` **from my laptop** (not the instance)
+- [x] Saved output as `trust-policy.json`
+- [x] Trust policy `Principal` is `ec2.amazonaws.com`
 
 ---
 
 # Step 10: Locate the Source of the Credentials
 
-- [ ] Fetched an IMDSv2 token, then read the role credentials from `169.254.169.254`
-- [ ] Response includes `AccessKeyId`, `SecretAccessKey`, `Token`, and an `Expiration`
+- [x] Fetched an IMDSv2 token, then read the role credentials from `169.254.169.254`
+- [x] Response includes `AccessKeyId`, `SecretAccessKey`, `Token`, and an `Expiration`
 
 ```
 _______________________________________________________________
@@ -164,9 +167,9 @@ _______________________________________________________________
 
 # Cleanup
 
-- [ ] Emptied and deleted the S3 bucket (`aws s3 rb ... --force`)
-- [ ] Instance **stopped** (not terminated)
-- [ ] IAM role left in place (costs nothing)
+- [x] Emptied and deleted the S3 bucket (`aws s3 rb ... --force`)
+- [x] Instance **stopped** (not terminated)
+- [x] IAM role left in place (costs nothing)
 
 ---
 
@@ -174,12 +177,12 @@ _______________________________________________________________
 
 Repository name: `ce-lab-iam-roles-ec2` (**public**)
 
-- [ ] `policies/s3-cloudwatch-policy.json` and `policies/trust-policy.json` committed
+- [x] `policies/s3-cloudwatch-policy.json` and `policies/trust-policy.json` committed
 - [ ] `test-output/` files committed (commands, S3 test, access-denied test)
-- [ ] All 6 screenshots present
-- [ ] `README.md` complete with reflections
-- [ ] Policy uses **both** ARN forms
-- [ ] `get-caller-identity` shows `assumed-role/`
-- [ ] `~/.aws/credentials` does **not** exist on the instance
-- [ ] Account ID redacted (if I chose to)
-- [ ] Repository URL submitted
+- [x] All 6 screenshots present
+- [x] `README.md` complete with reflections
+- [x] Policy uses **both** ARN forms
+- [x] `get-caller-identity` shows `assumed-role/`
+- [x] `~/.aws/credentials` does **not** exist on the instance
+- [x] Account ID redacted (if I chose to)
+- [x] Repository URL submitted
